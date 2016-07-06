@@ -1,0 +1,46 @@
+{
+  "name": "joyride",
+  "version": "1.0.0",
+  "description": "JavaScript Robot IDE",
+  "author": "Jesse Clark",
+  "license": "all rights reserved.",
+  "main": "node_modules/.bin/webpack-dev-server",
+  "scripts": {
+    "start": "webpack-dev-server --progress",
+    "build": "NODE_ENV=production webpack --optimize-minimize --progress",
+    "build-dev": "webpack --progress",
+    "clean": "rm -f public/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jjclark1982/joyride"
+  },
+  "dependencies": {
+    "eventemitter2": "~2.0.0",
+    "json-loader": "~0.5.4",
+    "json5-loader": "~0.6.0",
+    "jsx-loader": "~0.13.2",
+    "node-libs-browser": "1.0.0",
+    "purecss": "^0.6.0",
+    "react": "~15.0.1",
+    "react-dom": "~15.0.1",
+    "roslib": "~0.18.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.7",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "postcss-import": "^8.1.2",
+    "postcss-loader": "^0.9.1",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
