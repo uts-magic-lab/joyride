@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "JavaScript Robot IDE",
   "author": "Jesse Clark",
-  "license": "all rights reserved.",
+  "license": "MIT",
   "main": "node_modules/.bin/webpack-dev-server",
   "scripts": {
     "start": "webpack-dev-server --progress",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jjclark1982/joyride"
+    "url": "https://github.com/uts-magic-lab/joyride"
   },
   "dependencies": {
     "eventemitter2": "~2.0.0",
