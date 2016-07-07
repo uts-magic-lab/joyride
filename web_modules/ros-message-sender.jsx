@@ -20,11 +20,19 @@ export default class ROSMessageSender extends React.Component {
         myTopic.publish(myMessage);
     }
 
-
     render() {
+        var autofocus = (input)=>{
+            if (this.props.autofocus) {
+                input.focus();
+            }
+        };
         return (
             <form onSubmit={this.sendMessage}>
-                <input type="text" name="messageData" onChange={this.handleChange}/>
+                <input type="text"
+                    name="messageData"
+                    onChange={this.handleChange}
+                    ref={autofocus}
+                />
                 <button type="submit">Send</button>
             </form>
         );
