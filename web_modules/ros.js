@@ -15,7 +15,7 @@ ros.on('connection', function() {
 });
 
 ros.on('close', function() {
-  console.log('OSBridge Connection closed.');
+  console.log('ROSBridge Connection closed.');
 });
 
 export {ros, ROSLIB}
