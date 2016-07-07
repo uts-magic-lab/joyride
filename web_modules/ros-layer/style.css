@@ -1,0 +1,30 @@
+.ros-layer {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 300%;
+}
+
+.ros-layer-item {
+    pointer-events: initial;
+    position: relative;
+    margin: 0 auto;
+}
+
+.ros-layer-text {
+    top: 38.1966%;
+    transform: translateY(-50%);
+}
+
+.ros-layer-image {
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
