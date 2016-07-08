@@ -53,7 +53,7 @@ export default class ROSLayer extends React.Component {
         else if (isImage(message)) {
             item = <div
                 className="ros-layer-item ros-layer-image"
-                style={{backgroundImage: 'url('+message+')'}}
+                style={{backgroundImage: 'url('+message.replace(/ /g, '%20')+')'}}
             />
         }
         else {
