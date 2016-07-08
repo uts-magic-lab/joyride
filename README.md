@@ -1,6 +1,6 @@
 # JoyRIDE
 
-JavaScript ROBOT IDE
+JavaScript Robot IDE
 
 ### Installation
 
@@ -12,7 +12,7 @@ Run `npm start` and navigate a web browser to [http://localhost:8080/](http://lo
 
 ### Deployment
 
-Run `npm build`, then copy the contents of the `public/` directory to your web server.
+Run `npm run build`, then copy the contents of the `public/` directory to your web server.
 
 Make sure to start rosbridge:
 

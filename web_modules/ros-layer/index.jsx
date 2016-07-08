@@ -5,7 +5,7 @@ import {ros, ROSLIB} from 'ros';
 import ROSMessageSender from 'ros-message-sender';
 
 function isImage(path) {
-    return path.match(/\.(jpg|jpeg|png|gif|svg|bmp|tiff)$/i);
+    return path.match(/\.(jpg|jpeg|png|gif|svg|bmp|tiff)(\?.*)?$/i);
 }
 
 function isJSON(string) {
@@ -36,12 +36,13 @@ export default class ROSLayer extends React.Component {
         this.topic.subscribe((msg)=>{
             this.setState({latestMessage: msg.data});
         });
-        // this.setState({latestMessage: "Subscribed to "+this.props.topic});
+        this.setState({latestMessage: this.props.initialDisplay || ''});
     }
 
     render() {
         var item;
-        var data = isJSON(this.state.latestMessage);
+        var message = this.state.latestMessage || '';
+        var data = isJSON(message);
         if (data) {
             if (data.type == "keyboard") {
                 item = <div className="ros-layer-item ros-layer-text">
@@ -49,15 +50,15 @@ export default class ROSLayer extends React.Component {
                 </div>
             }
         }
-        else if (isImage(this.state.latestMessage)) {
+        else if (isImage(message)) {
             item = <div
                 className="ros-layer-item ros-layer-image"
-                style={{backgroundImage: 'url('+this.state.latestMessage+')'}}
+                style={{backgroundImage: 'url('+message+')'}}
             />
         }
         else {
             item = <p className="ros-layer-item ros-layer-text">
-                {this.state.latestMessage}
+                {message}
             </p>
         }
 
