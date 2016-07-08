@@ -48,27 +48,58 @@ var config = {
             },
             {
                 test: /\.(woff|woff2)$/,
-                loader: "url?prefix=font/&limit=5000"
+                loader: "url",
+                query: {limit: 5000, prefix:"font/"}
             },
             {
                 test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/octet-stream"
+                loader: "url",
+                query: {
+                    limit: 10000,
+                    mimetype:"application/octet-stream",
+                    name:"[path][name].[ext]?[hash]",
+                    context: "web_modules"
+                }
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=image/svg+xml"
+                loader: "url",
+                query: {
+                    limit: 10000,
+                    mimetype:"image/svg+xml",
+                    name:"[path][name].[ext]?[hash]",
+                    context: "web_modules"
+                }
             },
             {
                 test: /\.gif/,
-                loader: "url-loader?limit=10000&mimetype=image/gif"
+                loader: "url",
+                query: {
+                    limit: 10000,
+                    mimetype:"image/gif",
+                    name:"[path][name].[ext]?[hash]",
+                    context: "web_modules"
+                }
             },
             {
-                test: /\.jpg/,
-                loader: "url-loader?limit=10000&mimetype=image/jpg"
+                test: /\.jpe?g/,
+                loader: "url",
+                query: {
+                    limit: 10000,
+                    mimetype:"image/jpg",
+                    name:"[path][name].[ext]?[hash]",
+                    context: "web_modules"
+                }
             },
             {
                 test: /\.png/,
-                loader: "url-loader?limit=10000&mimetype=image/png"
+                loader: "url",
+                query: {
+                    limit: 10000,
+                    mimetype:"image/png",
+                    name:"[path][name].[ext]?[hash]",
+                    context: "web_modules"
+                }
             }
         ]
     },
