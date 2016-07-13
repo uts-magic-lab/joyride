@@ -63,6 +63,9 @@ export default class ROSLayer extends React.Component {
             else if (data.type == "video") {
                 item = <ROSVideoLayer topic={data.topic}/>
             }
+            else if (data.type == "color") {
+                item = <div className="ros-layer-color" style={{background: data.value}} />
+            }
         }
         if (!item) {
             item = <p className="ros-layer-item ros-layer-text">
