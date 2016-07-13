@@ -12,7 +12,7 @@ function connect() {
 
     // define a singleton with the live websocket connection
     ros = new ROSLIB.Ros({
-        url : 'ws://192.168.99.100:9090'
+        url: process.env.ROSBRIDGE_URI
     });
     ros.on('error', function(error) {
         console.log('ROSBridge error', error);

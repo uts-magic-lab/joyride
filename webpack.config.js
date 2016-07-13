@@ -4,6 +4,17 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var postcssImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
 
+// default values will be overridden by current environment
+var env = {
+    NODE_ENV: "'development'",
+    ROSBRIDGE_URI: "'ws://192.168.99.100:9090'"
+}
+Object.keys(env).forEach(function(key){
+    if (key in process.env) {
+        env[key] = JSON.stringify(process.env[key]);
+    }
+});
+
 var config = {
     entry: [
         'main/entry'
@@ -20,9 +31,7 @@ var config = {
     },
     plugins: [
         new ExtractTextPlugin('[name]-style.css'), 
-        new webpack.DefinePlugin({'process.env': {
-            NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-        }})
+        new webpack.DefinePlugin({'process.env': env})
     ],
     postcss: function(webpack) {
         return [
