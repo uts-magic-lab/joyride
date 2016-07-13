@@ -23,3 +23,4 @@ ros.on('close', function() {
 });
 
 export {ros, ROSLIB}
+export default ros

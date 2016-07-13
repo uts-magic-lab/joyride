@@ -1,7 +1,7 @@
 require('./style.css');
 
 import React from 'react';
-import {ros, ROSLIB} from 'ros';
+import ros from 'ros';
 import ROSMessageSender from 'ros-message-sender';
 import ROSVideoLayer from './video';
 
@@ -32,8 +32,7 @@ export default class ROSLayer extends React.Component {
     }
 
     componentDidMount() {
-        this.topic = new ROSLIB.Topic({
-            ros: ros,
+        this.topic = ros.Topic({
             name: this.props.topic,
             messageType: 'std_msgs/String'
         });

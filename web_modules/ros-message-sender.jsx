@@ -1,5 +1,5 @@
 import React from 'react';
-import {ros, ROSLIB} from 'ros';
+import ros from 'ros';
 
 export default class ROSMessageSender extends React.Component {
     constructor(props) {
@@ -7,17 +7,18 @@ export default class ROSMessageSender extends React.Component {
         this.sendMessage = this.sendMessage.bind(this);
     }
 
-    sendMessage(event) {
-        event.preventDefault();
-        var myTopic = new ROSLIB.Topic({
-            ros: ros,
+    componentDidMount() {
+        this.topic = ros.Topic({
             name: this.props.topic,
             messageType: 'std_msgs/String'
         });
-        var myMessage = new ROSLIB.Message({
+    }
+
+    sendMessage(event) {
+        event.preventDefault();
+        this.topic.publish({
             data: event.target.messageData.value
-        });
-        myTopic.publish(myMessage);
+        })
     }
 
     render() {
@@ -30,7 +31,6 @@ export default class ROSMessageSender extends React.Component {
             <form onSubmit={this.sendMessage}>
                 <input type="text"
                     name="messageData"
-                    onChange={this.handleChange}
                     ref={autofocus}
                 />
                 <button type="submit">Send</button>
