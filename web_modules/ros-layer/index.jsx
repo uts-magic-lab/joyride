@@ -3,12 +3,9 @@ require('./style.css');
 import React from 'react';
 import {ros, ROSLIB} from 'ros';
 import ROSMessageSender from 'ros-message-sender';
+import ROSVideoLayer from './video';
 
-function isImage(path) {
-    return path.match(/\.(jpg|jpeg|png|gif|svg|bmp|tiff)(\?.*)?$/i);
-}
-
-function isJSON(string) {
+function tryJSON(string) {
     var data = null;
     try {
         data = JSON.parse(string);
@@ -17,6 +14,13 @@ function isJSON(string) {
     catch (e) {
         return false;
     }
+}
+
+function makeImage(url) {
+    return (<div
+        className="ros-layer-item ros-layer-image"
+        style={{backgroundImage: 'url('+url.replace(/ /g, '%20')+')'}}
+    />)
 }
 
 export default class ROSLayer extends React.Component {
@@ -39,24 +43,28 @@ export default class ROSLayer extends React.Component {
         this.setState({latestMessage: this.props.initialDisplay || ''});
     }
 
+    componentWillUnmount() {
+        this.topic.unsubscribe()  
+    }
+
     render() {
-        var item;
+        var item=null;
         var message = this.state.latestMessage || '';
-        var data = isJSON(message);
+        var data = tryJSON(message);
         if (data) {
-            if (data.type == "keyboard") {
+            if (data.type == "prompt") {
                 item = <div className="ros-layer-item ros-layer-text">
                     <ROSMessageSender topic="/joyride/answer" autofocus/>
                 </div>
             }
+            else if (data.type == "img") {
+                item = makeImage(data.value);
+            }
+            else if (data.type == "video") {
+                item = <ROSVideoLayer topic={data.topic}/>
+            }
         }
-        else if (isImage(message)) {
-            item = <div
-                className="ros-layer-item ros-layer-image"
-                style={{backgroundImage: 'url('+message.replace(/ /g, '%20')+')'}}
-            />
-        }
-        else {
+        if (!item) {
             item = <p className="ros-layer-item ros-layer-text">
                 {message}
             </p>

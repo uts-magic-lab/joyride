@@ -28,3 +28,7 @@
     background-repeat: no-repeat;
     background-size: contain;
 }
+
+.ros-layer-video {
+    width: 100%;
+}
