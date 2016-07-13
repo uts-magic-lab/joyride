@@ -37,3 +37,11 @@
     width: 100%;
     height: 100%;
 }
+
+.ros-layer-buttons {
+    pointer-events: initial;
+}
+
+.ros-layer-buttons button {
+    margin: 0 0.25em;
+}

@@ -4,6 +4,7 @@ import React from 'react';
 import ros from 'ros';
 import ROSMessageSender from 'ros-message-sender';
 import ROSVideoLayer from './video';
+import ROSButtons from './buttons';
 
 function tryJSON(string) {
     var data = null;
@@ -64,6 +65,9 @@ export default class ROSLayer extends React.Component {
             }
             else if (data.type == "color") {
                 item = <div className="ros-layer-color" style={{background: data.value}} />
+            }
+            else if (data.type == "select") {
+                item = <ROSButtons text={data.text} options={data.options} topic={data.topic}/>
             }
         }
         if (!item) {
