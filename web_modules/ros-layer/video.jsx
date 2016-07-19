@@ -2,6 +2,7 @@ require('./style.css');
 
 import React from 'react';
 import ros from 'ros';
+import ScaledImage from './scaled-image';
 
 export default class ROSVideoLayer extends React.Component {
     constructor(props) {
@@ -31,6 +32,6 @@ export default class ROSVideoLayer extends React.Component {
         if (this.state.format.match(/jpeg/)) {
             src = "data:image/jpeg;base64,"+this.state.data;
         }
-        return <img className="ros-layer-video" src={src} />
+        return <ScaledImage src={src} />
     }
 }

@@ -2,6 +2,7 @@ require('./style.css');
 
 import React from 'react';
 import ros from 'ros';
+import ScaledImage from './scaled-image';
 import ROSMessageSender from 'ros-message-sender';
 import ROSVideoLayer from './video';
 import ROSButtons from './buttons';
@@ -17,11 +18,6 @@ function tryJSON(string) {
     }
 }
 
-function makeImage(url) {
-    return (<div
-        className="ros-layer-item ros-layer-image"
-        style={{backgroundImage: 'url('+url.replace(/ /g, '%20')+')'}}
-    />)
 }
 
 export default class ROSLayer extends React.Component {
@@ -69,6 +65,8 @@ export default class ROSLayer extends React.Component {
             else if (data.type == "select") {
                 item = <ROSButtons text={data.text} options={data.options} topic={data.topic}/>
             }
+        else if (data.type == "img") {
+            item = <ScaledImage src={data.value} />
         }
         if (!item) {
             item = <p className="ros-layer-item ros-layer-text">
