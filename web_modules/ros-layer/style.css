@@ -6,17 +6,30 @@
     height: 100%;
     text-align: center;
     font-size: 300%;
+    overflow-y: hidden;
 }
 
 .ros-layer-item {
-    position: relative;
+    /*position: relative;
     margin: 0 auto;
+    width: 100%;
+    height: 100%;*/
 }
 
-.ros-layer-text {
+.ros-layer-img,
+.ros-layer-color {
+    width: inherit;
+    height: inherit;
+}
+
+.ros-layer-text,
+.ros-layer-error,
+.ros-layer-prompt,
+.ros-layer-buttons {
     pointer-events: initial;
+    position: relative;
     top: 38.1966%;
-    transform: translateY(-50%);
+    /*transform: translateY(-50%);*/
 }
 
 .scaled-image {
@@ -27,19 +40,50 @@
     background-size: contain;
 }
 
-.ros-layer-video {
-    width: 100%;
-}
-
-.ros-layer-color {
-    width: 100%;
-    height: 100%;
-}
-
-.ros-layer-buttons {
-    pointer-events: initial;
-}
-
 .ros-layer-buttons button {
     margin: 0 0.25em;
+}
+
+
+.transition-vertical-enter {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+}
+
+.transition-vertical-enter.transition-vertical-enter-active {
+    top: 38.1966%;
+    transition: top 500ms ease-out;
+}
+
+.transition-vertical-leave {
+    position: absolute;
+    width: 100%;
+    top: 38.1966%;
+}
+
+.transition-vertical-leave.transition-vertical-leave-active {
+    transition: top 300ms ease-in;
+    top: -2em;
+}
+
+
+.transition-fade-enter {
+    position: absolute;
+    opacity: 0.01;
+}
+
+.transition-fade-enter.transition-fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms linear;
+}
+
+.transition-fade-leave {
+    position: absolute;
+    opacity: 1;
+}
+
+.transition-fade-leave.transition-fade-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms linear;
 }

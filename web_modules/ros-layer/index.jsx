@@ -1,30 +1,39 @@
 require('./style.css');
 
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import ros from 'ros';
 import ScaledImage from './scaled-image';
 import ROSMessageSender from 'ros-message-sender';
 import ROSVideoLayer from './video';
 import ROSButtons from './buttons';
 
-function tryJSON(string) {
+// ensure that messages always have a "type" and "key" when they are rendered
+function parseMessage(text) {
     var data = null;
     try {
-        data = JSON.parse(string);
-        return data;
+        data = JSON.parse(text);
     }
     catch (e) {
-        return false;
+        data = {
+            type: "error",
+            error: e,
+            value: text
+        };
     }
+    data.key = Date.now();
+    return data;
 }
 
+function safeClassName(name) {
+    return name.replace(/[^a-z0-9]+/g, '-');
 }
 
 export default class ROSLayer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-              latestMessage: ""
+            latestMessage: parseMessage(this.props.initialDisplay)
         };
     }
 
@@ -33,10 +42,10 @@ export default class ROSLayer extends React.Component {
             name: this.props.topic,
             messageType: 'std_msgs/String'
         });
-        this.topic.subscribe((msg)=>{
-            this.setState({latestMessage: msg.data});
+        this.topic.subscribe((message)=>{
+            var data = parseMessage(message.data);
+            this.setState({latestMessage: data});
         });
-        this.setState({latestMessage: this.props.initialDisplay || ''});
     }
 
     componentWillUnmount() {
@@ -44,38 +53,46 @@ export default class ROSLayer extends React.Component {
     }
 
     render() {
-        var item=null;
-        var message = this.state.latestMessage || '';
-        var data = tryJSON(message);
-        if (data) {
-            if (data.type == "prompt") {
-                item = <div className="ros-layer-item ros-layer-text">
-                    <ROSMessageSender topic="/joyride/answer" autofocus/>
-                </div>
-            }
-            else if (data.type == "img") {
-                item = makeImage(data.value);
-            }
-            else if (data.type == "video") {
-                item = <ROSVideoLayer topic={data.topic}/>
-            }
-            else if (data.type == "color") {
-                item = <div className="ros-layer-color" style={{background: data.value}} />
-            }
-            else if (data.type == "select") {
-                item = <ROSButtons text={data.text} options={data.options} topic={data.topic}/>
-            }
+        var item = null;
+        var data = this.state.latestMessage;
+        if (!data.type || data.type == "none") {
+            item = null;
+        }
+        else if (data.type == "text") {
+            item = <p>{message}</p>
+        }
+        else if (data.type == "color") {
+            item = <div className="ros-layer-color"
+                style={{background: data.value}} />
+        }
         else if (data.type == "img") {
             item = <ScaledImage src={data.value} />
         }
-        if (!item) {
-            item = <p className="ros-layer-item ros-layer-text">
-                {message}
-            </p>
+        else if (data.type == "video") {
+            item = <ROSVideoLayer topic={data.topic}/>
         }
+        else if (data.type == "select") {
+            item = <ROSButtons text={data.text} options={data.options} topic={data.topic}/>
+        }
+        else if (data.type == "prompt") {
+            item = <ROSMessageSender topic="/joyride/answer" autofocus/>
+        }
+        else {
+            // error debug display
+            item = <p>{data.value}</p>
+        }
+        window.lastItem = item;
+        var className = "ros-layer-item ros-layer-"+safeClassName(data.type);
 
         return (
-            <div className="ros-layer">{item}</div>
+            <ReactCSSTransitionGroup className="ros-layer"
+            transitionName={"transition-"+this.props.transitionName}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}>
+                <div className={className} key={data.key}>
+                    {item}
+                </div>
+            </ReactCSSTransitionGroup>
         );
     }
 }

@@ -23,7 +23,7 @@ export default class ROSMessageSender extends React.Component {
 
     render() {
         var autofocus = (input)=>{
-            if (this.props.autofocus) {
+            if (input && this.props.autofocus) {
                 input.focus();
             }
         };
