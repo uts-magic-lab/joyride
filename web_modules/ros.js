@@ -12,7 +12,7 @@ ros.on('error', function(error) {
 
 // Find out exactly when we made a connection.
 ros.on('connection', function() {
-    console.log('ROSBridge Connection made!');
+    console.log("Connected to ROSBridge", ros.socket.url);
 });
 
 ros.on('close', function() {
@@ -20,6 +20,9 @@ ros.on('close', function() {
     setTimeout(function(){
         ros.connect(process.env.ROSBRIDGE_URI);
     }, 5000);
+    // note: other modules still need to re-subscribe to everything.
+    // reloading the page is overkill
+    // but it may be possible to re-mount components
 });
 
 export {ros, ROSLIB}

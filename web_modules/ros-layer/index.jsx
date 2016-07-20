@@ -70,9 +70,14 @@ export default class ROSLayer extends React.Component {
             item = null;
         }
         else if (data.type == "text") {
-            item = <p className={className}>
-                {message}
-            </p>
+            let heading = null;
+            if (data.heading) {
+                heading = <h1>{data.heading}</h1>
+            }
+            item = <div className={className}>
+                {heading}
+                <p>{data.value}</p>
+            </div>
         }
         else if (data.type == "color") {
             item = <div
