@@ -6,8 +6,8 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <ROSLayer topic="/joyride/background" transitionName="fade"/>
-                <ROSLayer topic="/joyride/foreground" transitionName="vertical"/>
+                <ROSLayer topic="/joyride/background" transitionName="transition-fade"/>
+                <ROSLayer topic="/joyride/foreground" transitionName="transition-slide-up"/>
                 <label>
                     Set Background:
                     <ROSMessageSender topic="/joyride/background"/>

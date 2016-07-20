@@ -1,3 +1,5 @@
+/* a layer is fullscren by default, can be overridden by style="" */
+
 .ros-layer {
     pointer-events: none;
     position: absolute;
@@ -9,17 +11,23 @@
     overflow-y: hidden;
 }
 
+/* takes up the whole layer. it is the transitionable screen */
+
 .ros-layer-item {
-    /*position: relative;
-    margin: 0 auto;
+    position: absolute;
     width: 100%;
-    height: 100%;*/
+    height: 100%;
 }
 
-.ros-layer-img,
+/* specific layer types */
+
 .ros-layer-color {
-    width: inherit;
-    height: inherit;
+    transition: background 500ms ease;
+}
+
+.ros-layer-color {
+    width: 100%;
+    height: 100%;
 }
 
 .ros-layer-text,
@@ -29,7 +37,12 @@
     pointer-events: initial;
     position: relative;
     top: 38.1966%;
-    /*transform: translateY(-50%);*/
+    transform: translateY(-50%);
+    margin: 0;
+}
+
+.ros-layer-buttons button {
+    margin: 0 0.25em;
 }
 
 .scaled-image {
@@ -40,50 +53,49 @@
     background-size: contain;
 }
 
-.ros-layer-buttons button {
-    margin: 0 0.25em;
-}
+/* animations */
 
-
-.transition-vertical-enter {
-    position: absolute;
-    width: 100%;
+.transition-slide-up-enter {
+    transition: top 500ms ease-in-out;
     top: 100%;
 }
-
-.transition-vertical-enter.transition-vertical-enter-active {
-    top: 38.1966%;
-    transition: top 500ms ease-out;
+.transition-slide-up-enter.transition-slide-up-enter-active {
+    top: 0;
+}
+.transition-slide-up-leave {
+    transition: top 500ms ease-in-out;
+    top: 0;
+}
+.transition-slide-up-leave.transition-slide-up-leave-active {
+    top: -100%
 }
 
-.transition-vertical-leave {
-    position: absolute;
-    width: 100%;
-    top: 38.1966%;
+.transition-slide-down-enter {
+    transition: top 500ms ease-in-out;
+    top: -100%;
 }
-
-.transition-vertical-leave.transition-vertical-leave-active {
-    transition: top 300ms ease-in;
-    top: -2em;
+.transition-slide-down-enter.transition-slide-down-enter-active {
+    top: 0;
 }
-
+.transition-slide-down-leave {
+    transition: top 500ms ease-in-out;
+    top: 0;
+}
+.transition-slide-down-leave.transition-slide-down-leave-active {
+    top: 100%
+}
 
 .transition-fade-enter {
-    position: absolute;
+    transition: opacity 500ms linear;
     opacity: 0.01;
 }
-
 .transition-fade-enter.transition-fade-enter-active {
     opacity: 1;
-    transition: opacity 500ms linear;
 }
-
 .transition-fade-leave {
-    position: absolute;
+    transition: opacity 500ms linear;
     opacity: 1;
 }
-
 .transition-fade-leave.transition-fade-leave-active {
     opacity: 0.01;
-    transition: opacity 300ms linear;
 }

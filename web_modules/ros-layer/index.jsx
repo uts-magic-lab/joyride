@@ -21,7 +21,7 @@ function parseMessage(text) {
             value: text
         };
     }
-    data.key = Date.now();
+    data.key = data.key || Date.now();
     return data;
 }
 
@@ -43,8 +43,9 @@ export default class ROSLayer extends React.Component {
             messageType: 'std_msgs/String'
         });
         this.topic.subscribe((message)=>{
-            var data = parseMessage(message.data);
-            this.setState({latestMessage: data});
+            this.setState({
+                latestMessage: parseMessage(message.data)
+            });
         });
     }
 
@@ -55,21 +56,28 @@ export default class ROSLayer extends React.Component {
     render() {
         var item = null;
         var data = this.state.latestMessage;
+        var key = data.key;
+        var className = "ros-layer-"+safeClassName(data.type);
         if (!data.type || data.type == "none") {
             item = null;
         }
         else if (data.type == "text") {
-            item = <p>{message}</p>
+            item = <p className={className}>
+                {message}
+            </p>
         }
         else if (data.type == "color") {
-            item = <div className="ros-layer-color"
-                style={{background: data.value}} />
+            item = <div className={className} style={{background: data.value}}/>
+            // always fade from one color to another
+            key = "color";
         }
         else if (data.type == "img") {
-            item = <ScaledImage src={data.value} />
+            item = <ScaledImage src={data.value}/>
         }
         else if (data.type == "video") {
             item = <ROSVideoLayer topic={data.topic}/>
+            // only animate changes between different channels
+            key = "video-"+data.topic;
         }
         else if (data.type == "select") {
             item = <ROSButtons text={data.text} options={data.options} topic={data.topic}/>
@@ -79,17 +87,16 @@ export default class ROSLayer extends React.Component {
         }
         else {
             // error debug display
-            item = <p>{data.value}</p>
+            item = <p className={className}>{data.value}</p>
         }
-        window.lastItem = item;
-        var className = "ros-layer-item ros-layer-"+safeClassName(data.type);
 
         return (
             <ReactCSSTransitionGroup className="ros-layer"
-            transitionName={"transition-"+this.props.transitionName}
+            transitionName={this.props.transitionName}
             transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}>
-                <div className={className} key={data.key}>
+            transitionLeaveTimeout={500}>
+                <div className="ros-layer-item"
+                key={key}>
                     {item}
                 </div>
             </ReactCSSTransitionGroup>
