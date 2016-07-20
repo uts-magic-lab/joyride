@@ -116,6 +116,7 @@ var config = {
 };
 
 config.devServer = {
+    port: process.env.PORT || '8080',
     contentBase: config.output.path,
     publicPath: '/',
     compress: true
