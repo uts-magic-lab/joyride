@@ -44,6 +44,9 @@
 .ros-layer-buttons button {
     margin: 0 0.25em;
 }
+.ros-layer-buttons button.selected {
+    background: yellow;
+}
 
 .scaled-image {
     width: 100%;

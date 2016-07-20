@@ -6,7 +6,9 @@ import ros from 'ros';
 export default class ROSButtons extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {submitted: false};
+        this.state = {
+            selection: null
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
@@ -19,23 +21,30 @@ export default class ROSButtons extends React.Component {
     }
 
     handleClick(event) {
-        this.selection = event.target.value;
+        this.setState({
+            selection: event.target.value
+        })
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        for (const button of event.target.querySelectorAll("button")) {
+            button.disabled = true;
+        }
         this.topic.publish({
-            data: this.selection
+            data: this.state.selection
         });
-        this.setState({submitted: true});
+        if (this.props.onSubmit) {
+            this.props.onSubmit(this.state.selection);
+        }
     }
 
     render() {
-        var buttons = [];
-        var options = this.props.options || [];
-        options.forEach((option, i)=>{
-            buttons.push(
+        const options = this.props.options || [];
+        const buttons = options.map((option, i)=>{
+            return (
                 <button key={i}
+                className={this.state.selection == option ? "selected" : ""}
                 type="submit"
                 name="selection"
                 value={option}
@@ -43,17 +52,13 @@ export default class ROSButtons extends React.Component {
                     {option}
                 </button>
             )
-        })
-        var form =
-            <form onSubmit={this.handleSubmit}>
+        });
+
+        return (
+            <form className="ros-layer-buttons" onSubmit={this.handleSubmit}>
                 <p>{this.props.text}</p>
                 {buttons}
             </form>
-
-        return (
-            <div className="ros-layer-buttons">
-                {this.state.submitted ? null : form}
-            </div>
         )
     }
 }

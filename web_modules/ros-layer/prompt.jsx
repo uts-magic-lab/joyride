@@ -19,6 +19,9 @@ export default class ROSPrompt extends React.Component {
         this.topic.publish({
             data: event.target.messageData.value
         })
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
+        }
     }
 
     render() {

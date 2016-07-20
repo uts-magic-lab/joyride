@@ -12,7 +12,7 @@ import ROSButtons from './buttons';
 function parseMessage(text) {
     var data = null;
     try {
-        data = JSON.parse(text);
+        data = JSON.parse(text) || {};
     }
     catch (e) {
         data = {
@@ -35,6 +35,7 @@ export default class ROSLayer extends React.Component {
         this.state = {
             latestMessage: parseMessage(this.props.initialDisplay)
         };
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -50,14 +51,21 @@ export default class ROSLayer extends React.Component {
     }
 
     componentWillUnmount() {
-        this.topic.unsubscribe()  
+        this.topic.unsubscribe();
+    }
+
+    onSubmit() {
+        // animate disappearance of submittable item
+        this.setState({
+            latestMessage: parseMessage('')
+        });
     }
 
     render() {
         var item = null;
         var data = this.state.latestMessage;
         var key = data.key;
-        var className = "ros-layer-"+safeClassName(data.type);
+        var className = "ros-layer-"+safeClassName(data.type || 'unknown');
         if (!data.type || data.type == "none") {
             item = null;
         }
@@ -69,7 +77,8 @@ export default class ROSLayer extends React.Component {
         else if (data.type == "color") {
             item = <div
                 className={className}
-                style={{background: data.value}}/>
+                style={{background: data.value}}
+            />
             // always fade from one color to another
             key = "color";
         }
@@ -85,13 +94,17 @@ export default class ROSLayer extends React.Component {
             item = <ROSButtons
                 text={data.text}
                 options={data.options}
-                topic={data.topic}/>
+                topic={data.topic}
+                onSubmit={this.onSubmit}
+            />
         }
         else if (data.type == "prompt") {
             item = <ROSPrompt
                 topic="/joyride/answer"
                 text={data.text}
-                autofocus/>
+                onSubmit={this.onSubmit}
+                autofocus
+            />
         }
         else {
             // error and debug display
