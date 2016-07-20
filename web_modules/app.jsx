@@ -1,6 +1,6 @@
 import React from 'react';
 import ROSLayer from 'ros-layer';
-import ROSMessageSender from 'ros-message-sender';
+import ROSPrompt from 'ros-layer/prompt';
 
 export default class App extends React.Component {
     render() {
@@ -8,15 +8,8 @@ export default class App extends React.Component {
             <div>
                 <ROSLayer topic="/joyride/background" transitionName="transition-fade"/>
                 <ROSLayer topic="/joyride/foreground" transitionName="transition-slide-up"/>
-                <label>
-                    Set Background:
-                    <ROSMessageSender topic="/joyride/background"/>
-                </label>
-                <br/>
-                <label>
-                    Set Foreground:
-                    <ROSMessageSender topic="/joyride/foreground"/>
-                </label>
+                <ROSPrompt topic="/joyride/background" text="Set Background:"/>
+                <ROSPrompt topic="/joyride/foreground" text="Set Foreground:"/>
             </div>
         );
     }

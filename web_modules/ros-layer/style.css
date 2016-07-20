@@ -32,7 +32,7 @@
 
 .ros-layer-text,
 .ros-layer-error,
-.ros-layer-prompt,
+.ros-layer-item>.ros-prompt,
 .ros-layer-buttons {
     pointer-events: initial;
     position: relative;

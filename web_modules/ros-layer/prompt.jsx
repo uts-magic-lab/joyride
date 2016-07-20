@@ -1,7 +1,7 @@
 import React from 'react';
 import ros from 'ros';
 
-export default class ROSMessageSender extends React.Component {
+export default class ROSPrompt extends React.Component {
     constructor(props) {
         super(props);
         this.sendMessage = this.sendMessage.bind(this);
@@ -28,11 +28,13 @@ export default class ROSMessageSender extends React.Component {
             }
         };
         return (
-            <form onSubmit={this.sendMessage}>
-                <input type="text"
-                    name="messageData"
-                    ref={autofocus}
-                />
+            <form className="ros-prompt" onSubmit={this.sendMessage}>
+                <label>
+                    <p>{this.props.text}</p>
+                    <input type="text"
+                        name="messageData"
+                        ref={autofocus}/>
+                </label>
                 <button type="submit">Send</button>
             </form>
         );

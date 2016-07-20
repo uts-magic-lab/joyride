@@ -4,7 +4,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import ros from 'ros';
 import ScaledImage from './scaled-image';
-import ROSMessageSender from 'ros-message-sender';
+import ROSPrompt from './prompt';
 import ROSVideoLayer from './video';
 import ROSButtons from './buttons';
 
@@ -67,7 +67,9 @@ export default class ROSLayer extends React.Component {
             </p>
         }
         else if (data.type == "color") {
-            item = <div className={className} style={{background: data.value}}/>
+            item = <div
+                className={className}
+                style={{background: data.value}}/>
             // always fade from one color to another
             key = "color";
         }
@@ -80,13 +82,19 @@ export default class ROSLayer extends React.Component {
             key = "video-"+data.topic;
         }
         else if (data.type == "select") {
-            item = <ROSButtons text={data.text} options={data.options} topic={data.topic}/>
+            item = <ROSButtons
+                text={data.text}
+                options={data.options}
+                topic={data.topic}/>
         }
         else if (data.type == "prompt") {
-            item = <ROSMessageSender topic="/joyride/answer" autofocus/>
+            item = <ROSPrompt
+                topic="/joyride/answer"
+                text={data.text}
+                autofocus/>
         }
         else {
-            // error debug display
+            // error and debug display
             item = <p className={className}>{data.value}</p>
         }
 
