@@ -9,7 +9,6 @@ export default class ROSButtons extends React.Component {
         this.state = {
             selection: null
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -21,41 +20,35 @@ export default class ROSButtons extends React.Component {
     }
 
     handleClick(event) {
-        this.setState({
-            selection: event.target.value
-        })
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        for (const button of event.target.querySelectorAll("button")) {
-            button.disabled = true;
-        }
         this.topic.publish({
             data: this.state.selection
         });
         if (this.props.onSubmit) {
             this.props.onSubmit(this.state.selection);
         }
+        this.setState({
+            selection: event.target.value
+        })
     }
 
     render() {
         const options = this.props.options || [];
         const buttons = options.map((option, i)=>{
             return (
-                <button key={i}
+                <button type="button"
+                key={i}
+                disabled={this.state.selection != null}
                 className={this.state.selection == option ? "selected" : ""}
-                type="submit"
+                onClick={this.handleClick}
                 name="selection"
-                value={option}
-                onClick={this.handleClick}>
+                value={option}>
                     {option}
                 </button>
             )
         });
 
         return (
-            <form className="ros-layer-buttons" onSubmit={this.handleSubmit}>
+            <form className="ros-layer-buttons">
                 <p>{this.props.text}</p>
                 {buttons}
             </form>
