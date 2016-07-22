@@ -1,6 +1,11 @@
 import React from 'react';
 import ros from 'ros';
 
+// a text entry prompt that can send entered text as a ROS Message.
+// by default, it sends the entered text as a String.
+// with the property `fields`, it sends a JSON string with the
+// specified fields and the entered text as 'value'
+
 export default class ROSPrompt extends React.Component {
     constructor(props) {
         super(props);
@@ -16,11 +21,18 @@ export default class ROSPrompt extends React.Component {
 
     sendMessage(event) {
         event.preventDefault();
+        var input = event.target.querySelector('input');
+        var value = input.value;
+        var data = value;
+        if (this.props.fields) {
+            value = Object.assign({}, this.props.fields, {value: value});
+            data = JSON.stringify(value);
+        }
         this.topic.publish({
-            data: event.target.messageData.value
-        })
+            data: data
+        });
         if (this.props.onSubmit) {
-            this.props.onSubmit();
+            this.props.onSubmit(value);
         }
     }
 
@@ -35,7 +47,7 @@ export default class ROSPrompt extends React.Component {
                 <label>
                     <p>{this.props.text}</p>
                     <input type="text"
-                        name="messageData"
+                        name="answer"
                         ref={autofocus}/>
                 </label>
                 <button type="submit">Send</button>

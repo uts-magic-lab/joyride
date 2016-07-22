@@ -1,7 +1,10 @@
-require('./style.css');
-
 import React from 'react';
 import ros from 'ros';
+
+// a multiple-choice question that can send the answer as a ROS Message.
+// by default, it sends the entered text as a String.
+// with the property `fields`, it sends a JSON string with the
+// specified fields and the entered text as 'value'
 
 export default class ROSButtons extends React.Component {
     constructor(props) {
@@ -20,11 +23,17 @@ export default class ROSButtons extends React.Component {
     }
 
     handleClick(event) {
+        var value = event.target.value;
+        var data = value;
+        if (this.props.fields) {
+            value = Object.assign({}, this.props.fields, {value: value});
+            data = JSON.stringify(value);
+        }
         this.topic.publish({
-            data: this.state.selection
+            data: data
         });
         if (this.props.onSubmit) {
-            this.props.onSubmit(this.state.selection);
+            this.props.onSubmit(value);
         }
         this.setState({
             selection: event.target.value
@@ -40,7 +49,7 @@ export default class ROSButtons extends React.Component {
                 disabled={this.state.selection != null}
                 className={this.state.selection == option ? "selected" : ""}
                 onClick={this.handleClick}
-                name="selection"
+                name="answer"
                 value={option}>
                     {option}
                 </button>

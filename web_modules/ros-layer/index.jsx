@@ -10,6 +10,12 @@ import ROSButtons from './buttons';
 
 // ensure that messages always have a "type" and "key" when they are rendered
 function parseMessage(text) {
+    if (!text) {
+        return {
+            type: "none",
+            key: "none"
+        }
+    }
     var data = null;
     try {
         data = JSON.parse(text) || {};
@@ -21,7 +27,9 @@ function parseMessage(text) {
             value: text
         };
     }
+    // support taking an animation key as input
     data.key = data.key || Date.now();
+
     return data;
 }
 
@@ -55,9 +63,9 @@ export default class ROSLayer extends React.Component {
     }
 
     onSubmit() {
-        // animate disappearance of submittable item
+        // animate disappearance of submitted item
         this.setState({
-            latestMessage: parseMessage('')
+            latestMessage: parseMessage(null)
         });
     }
 
@@ -66,8 +74,9 @@ export default class ROSLayer extends React.Component {
         var data = this.state.latestMessage;
         var key = data.key;
         var className = "ros-layer-"+safeClassName(data.type || 'unknown');
-        if (!data.type || data.type == "none") {
+        if (data.type == "none") {
             item = null;
+            key = 'none';
         }
         else if (data.type == "text") {
             let heading = null;
@@ -96,17 +105,27 @@ export default class ROSLayer extends React.Component {
             key = "video-"+data.topic;
         }
         else if (data.type == "select") {
+            let fields = null;
+            if (data.name) {
+                fields = { name: data.name };
+            }
             item = <ROSButtons
+                topic={data.topic || "/joyride/answer"}
                 text={data.text}
                 options={data.options}
-                topic={data.topic}
+                fields={fields}
                 onSubmit={this.onSubmit}
             />
         }
         else if (data.type == "prompt") {
+            let fields = null;
+            if (data.name) {
+                fields = { name: data.name };
+            }
             item = <ROSPrompt
-                topic="/joyride/answer"
+                topic={data.topic || "/joyride/answer"}
                 text={data.text}
+                fields={fields}
                 onSubmit={this.onSubmit}
                 autofocus
             />
