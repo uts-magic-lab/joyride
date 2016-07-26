@@ -25,7 +25,8 @@
     "react": "^15.2.1",
     "react-addons-css-transition-group": "^15.2.1",
     "react-dom": "^15.2.1",
-    "roslib": "~0.18.0"
+    "roslib": "~0.18.0",
+    "webpack-fail-plugin": "^1.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",

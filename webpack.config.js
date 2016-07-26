@@ -3,6 +3,7 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var postcssImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
+var failPlugin = require('webpack-fail-plugin');
 
 // default values will be overridden by current environment
 var env = {
@@ -31,7 +32,8 @@ var config = {
     },
     plugins: [
         new ExtractTextPlugin('[name]-style.css'), 
-        new webpack.DefinePlugin({'process.env': env})
+        new webpack.DefinePlugin({'process.env': env}),
+        failPlugin
     ],
     postcss: function(webpack) {
         return [
