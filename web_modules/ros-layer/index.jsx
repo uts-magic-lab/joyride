@@ -17,15 +17,21 @@ function parseMessage(text) {
         }
     }
     var data = null;
-    try {
-        data = JSON.parse(text) || {};
+    if (typeof text != "string") {
+        data = text;
+        data.type = data.type || "error";
     }
-    catch (e) {
-        data = {
-            type: "error",
-            error: e,
-            value: text
-        };
+    else {
+        try {
+            data = JSON.parse(text) || {};
+        }
+        catch (e) {
+            data = {
+                type: "error",
+                error: e,
+                value: text
+            };
+        }
     }
     // support taking an animation key as input
     data.key = data.key || Date.now();
