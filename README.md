@@ -55,4 +55,6 @@ To command a JoyRIDE layer, send a ROS message of type `std_msgs/String` to `/jo
 
 - **`prompt`**: Asks `text` as a question and presents a keyboard to enter an answer. Sends the response as a String message to `/joyride/answer`.
 
+-- **`urdf`**: Show ROS visualization (TBD)
+
 - anything else: displays command onscreen as JSON to aid debugging

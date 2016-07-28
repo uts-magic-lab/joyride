@@ -1,18 +1,23 @@
 global.EventEmitter2 = require('eventemitter2');
 var ROSLIB = require('roslib');
+import rosout from './rosout';
 
 // define a singleton with the live websocket connection
 var ros = new ROSLIB.Ros({
     url: process.env.ROSBRIDGE_URI
 });
 
+// make logging functions available from the shared instance
+Object.assign(ros, rosout(ros));
+
 ros.on('error', function(error) {
     console.log('ROSBridge error', error);
 });
 
 // Find out exactly when we made a connection.
-ros.on('connection', function() {
+ros.on('connection', function connected() {
     console.log("Connected to ROSBridge", ros.socket.url);
+    ros.loginfo(`JoyRIDE started at ${document.location} on ${navigator.userAgent}`);
 });
 
 ros.on('close', function() {
