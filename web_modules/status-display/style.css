@@ -1,0 +1,51 @@
+#status-display {
+    position: fixed;
+    top: 4rem;
+    left: 20%;
+    right: 20%;
+    text-align: center;
+    color: #444;
+    font-size: 2rem;
+    box-sizing: border-box;
+    padding: 1em;
+    overflow: auto;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+#status-display:before {
+    display: block;
+    position: relative;
+    margin: auto;
+    width: 1em;
+    font-size: 6rem;
+}
+
+#status-display[data-status="OK"] {
+    opacity: 0;
+    transition: opacity 300ms linear;
+}
+#status-display[data-status="OK"]:before {
+    color: green;
+    content: "✓";
+}
+
+#status-display[data-status="Loading"]:before {
+    content: "✿";
+    animation: spin 6s linear infinite;
+}
+
+#status-display[data-status="Connecting"]:before {
+    content: "❀";
+    animation: spin 6s linear infinite;
+}
+
+#status-display[data-status="Error"]:before {
+    color: orange;
+    content: "⚠︎";
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

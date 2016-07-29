@@ -6,7 +6,18 @@
     <link rel="stylesheet" type="text/css" href="main-style.css">
 </head>
 <body>
+    <noscript>
+        <div id="status-display" data-status="Error">
+            This application requires JavaScript.
+            Here are the <a href="http://www.enable-javascript.com/" target="_blank">
+            instructions how to enable JavaScript in your web browser</a>.
+        </div>
+    </noscript>
+    <script>
+        document.write('<div id="status-display" data-status="Loading">Loading</div>');
+    </script>
     <main></main>
     <script src="main-bundle.js" type="text/javascript"></script>
+    <style>#status-display[data-status="Loading"]{display: none;}</style>
 </body>
 </html>
