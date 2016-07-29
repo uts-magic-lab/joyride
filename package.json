@@ -7,7 +7,7 @@
   "main": "node_modules/.bin/webpack-dev-server",
   "scripts": {
     "start": "webpack-dev-server --progress",
-    "build": "NODE_ENV=production webpack --optimize-minimize --progress",
+    "build": "NODE_ENV=production webpack --progress",
     "build-dev": "webpack --progress",
     "clean": "rm -rf public",
     "test": "echo 'Error: no test specified' && exit 1"
@@ -20,7 +20,6 @@
     "eventemitter2": "~2.0.0",
     "json-loader": "~0.5.4",
     "jsx-loader": "~0.13.2",
-    "node-libs-browser": "1.0.0",
     "purecss": "^0.6.0",
     "react": "^15.2.1",
     "react-addons-css-transition-group": "^15.2.1",

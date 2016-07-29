@@ -5,9 +5,8 @@ var postcssImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
 var failPlugin = require('webpack-fail-plugin');
 
-var packageInfo = require('./package');
-
 // default values will be overridden by current environment
+var packageInfo = require('./package');
 var env = {
     NODE_ENV: 'development',
     ROSBRIDGE_URI: 'ws://192.168.99.100:9090',
@@ -21,6 +20,14 @@ Object.keys(env).forEach(function(key){
     env[key] = JSON.stringify(env[key]);
 });
 
+// keep a pointer to css loader so it can change based on environment
+var cssPlugin = new ExtractTextPlugin('[name]-style.css');
+var cssLoader = {
+    test: /\.css$/,
+    loader: cssPlugin.extract("style", "css!postcss")
+}
+
+// main config object
 var config = {
     entry: [
         'main/entry'
@@ -36,8 +43,8 @@ var config = {
         modulesDirectories: ['web_modules','node_modules']
     },
     plugins: [
-        new ExtractTextPlugin('[name]-style.css'), 
         new webpack.DefinePlugin({'process.env': env}),
+        cssPlugin, 
         failPlugin
     ],
     postcss: function(webpack) {
@@ -49,14 +56,11 @@ var config = {
     profile: true,
     module: {
         loaders: [
+            cssLoader,
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 loaders: ['react-hot', 'babel'],
-            },
-            {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader")
             },
             {
                 test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -130,12 +134,18 @@ config.devServer = {
     compress: true
 }
 
-// only enable source-maps and hot module reloading in development
-if (process.env.NODE_ENV !== 'production') {
+// in production mode, minimize file-size
+if (process.env.NODE_ENV === 'production') {
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+}
+
+// when running webpack-dev-server, enable hot module reloading
+if (require.cache[require.resolve('webpack-dev-server')]) {
     config.plugins.push(new webpack.NoErrorsPlugin());
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
     config.devServer.hot = true;
     config.devServer.inline = true;
+    cssLoader.loader = "style!css!postcss";
 }
 
 module.exports = config;
