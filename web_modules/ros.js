@@ -17,7 +17,8 @@ ros.on('error', function(error) {
 // Find out exactly when we made a connection.
 ros.on('connection', function connected() {
     console.log("Connected to ROSBridge", ros.socket.url);
-    ros.loginfo(`JoyRIDE started at ${document.location} on ${navigator.userAgent}`);
+    ros.loginfo(`${process.env.PACKAGE_NAME} v${process.env.PACKAGE_VERSION}` +
+        ` started at ${document.location} on ${navigator.userAgent}`);
 });
 
 ros.on('close', function() {
@@ -32,3 +33,8 @@ ros.on('close', function() {
 
 export {ros, ROSLIB}
 export default ros
+
+if (process.env.NODE_ENV == 'debug') {
+    window.ros = ros;
+    window.ROSLIB = ROSLIB;    
+}

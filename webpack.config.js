@@ -5,15 +5,20 @@ var postcssImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
 var failPlugin = require('webpack-fail-plugin');
 
+var packageInfo = require('./package');
+
 // default values will be overridden by current environment
 var env = {
-    NODE_ENV: "'development'",
-    ROSBRIDGE_URI: "'ws://192.168.99.100:9090'"
-}
+    NODE_ENV: 'development',
+    ROSBRIDGE_URI: 'ws://192.168.99.100:9090',
+    PACKAGE_NAME: packageInfo.name,
+    PACKAGE_VERSION: packageInfo.version
+};
 Object.keys(env).forEach(function(key){
     if (key in process.env) {
-        env[key] = JSON.stringify(process.env[key]);
+        env[key] = process.env[key];
     }
+    env[key] = JSON.stringify(env[key]);
 });
 
 var config = {
