@@ -8,8 +8,10 @@ export default class App extends React.Component {
             <div>
                 <ROSLayer topic="/joyride/background" transitionName="transition-fade"/>
                 <ROSLayer topic="/joyride/foreground" transitionName="transition-slide-up"/>
-                <ROSPrompt topic="/joyride/background" text="Set Background:"/>
-                <ROSPrompt topic="/joyride/foreground" text="Set Foreground:"/>
+                <div style={{position: "relative", margin: "1em"}}>
+                    <ROSPrompt topic="/joyride/background" text="Set Background:"/>
+                    <ROSPrompt topic="/joyride/foreground" text="Set Foreground:"/>
+                </div>
             </div>
         );
     }

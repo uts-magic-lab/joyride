@@ -27,7 +27,7 @@ var statusDisplay = {
             el.innerText = message || '';
         }
 
-        console.log(`Status="${name}"`, message);
+        console.log(`[${name}]`, message);
     }
 }
 
