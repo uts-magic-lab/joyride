@@ -7,6 +7,7 @@ import ScaledImage from './scaled-image';
 import ROSPrompt from './prompt';
 import ROSVideoLayer from './video';
 import ROSButtons from './buttons';
+import ROSColorLayer from './color';
 
 // ensure that messages always have a "type" and "key" when they are rendered
 function parseMessage(text) {
@@ -71,7 +72,7 @@ export default class ROSLayer extends React.Component {
     onSubmit() {
         // animate disappearance of submitted item
         this.setState({
-            latestMessage: parseMessage(null)
+            latestMessage: parseMessage(this.props.initialDisplay)
         });
     }
 
@@ -95,10 +96,7 @@ export default class ROSLayer extends React.Component {
             </div>
         }
         else if (data.type == "color") {
-            item = <div
-                className={className}
-                style={{background: data.value}}
-            />
+            item = <ROSColorLayer color={data.value} />
             // always fade from one color to another
             key = "color";
         }
