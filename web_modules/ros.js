@@ -4,7 +4,7 @@ import rosout from './rosout';
 import statusDisplay from 'status-display';
 
 // define a singleton with the live websocket connection
-statusDisplay.set('Connecting', 'Connecting to ROS');
+statusDisplay.set('Connecting', 'Connecting to ROS...');
 var ros = new ROSLIB.Ros({
     url: process.env.ROSBRIDGE_URI
 });
@@ -31,7 +31,7 @@ ros.on('close', function() {
         statusDisplay.set('Connecting', 'Connecting to ROS');
     }
     else {
-        statusDisplay.set('Error', 'ROS Connection closed. Reconnecting.');
+        statusDisplay.set('Error', 'ROS Connection closed. Reconnecting...');
     }
     setTimeout(function(){
         ros.connect(process.env.ROSBRIDGE_URI);

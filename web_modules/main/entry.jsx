@@ -2,12 +2,12 @@ import 'file?name=index.html!./index.html';
 import './style.css';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
 import App from 'app';
 import statusDisplay from 'status-display';
 
 try {
-    ReactDOM.render(<App/>, document.querySelector('main'));
+    render(<App/>, document.getElementById('app'));
 }
 catch (error) {
     statusDisplay.set('Error', error.stack);

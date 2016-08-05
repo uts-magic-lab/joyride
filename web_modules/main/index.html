@@ -6,14 +6,14 @@
     <link rel="stylesheet" type="text/css" href="main-style.css">
 </head>
 <body>
-    <script>
-        document.write('<div id="status-display" data-status="Loading">Loading</div>');
-    </script>
-    <main>
+    <div id="app">
         <noscript>
             <div id="status-display" data-status="Error">This application requires JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions to enable JavaScript</a> in your web browser.</div>
         </noscript>
-    </main>
+    </div>
+    <script>
+        document.write('<div id="status-display" data-status="Loading">Loading...</div>');
+    </script>
     <script src="main-bundle.js" type="text/javascript"></script>
     <style>#status-display[data-status="Loading"]{display: none;}</style>
 </body>
