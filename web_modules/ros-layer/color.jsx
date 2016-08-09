@@ -10,7 +10,7 @@ export default class ROSColorLayer extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.color) {
+        if (nextProps.color && nextProps.color != this.props.color) {
             this.setState({color: nextProps.color});
         }
     }
