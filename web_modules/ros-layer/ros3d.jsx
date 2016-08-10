@@ -22,17 +22,18 @@ export default class ROS3DLayer extends React.Component {
     }
 
     componentDidMount() {
+        window.addEventListener("resize", this.updateSize);
+
         let param = ros.Param({name: this.props.param || 'robot_description'});
         param.get((robot_description)=>{
-            console.log("got description");
             var model = new ROSLIB.UrdfModel({string: robot_description});
             this.setState({model: model});
         });
 
         this.viewer = new ROS3D.Viewer({
-            divID: "ros3d-"+this.state.cid,
-            width: 400,
-            height: 400,
+            divID: this._div.id,
+            width: this._div.parentElement.clientWidth,
+            height: this._div.parentElement.clientHeight,
             antialias: true,
             background: '#002233'
         });
@@ -55,20 +56,21 @@ export default class ROS3DLayer extends React.Component {
             rootObject: this.viewer.scene,
             loader:  ROS3D.COLLADA_LOADER
         });
+
     }
 
-    updateSize(div) {
-        // div.innerWidth is always undefined when this runs :(
-        if (div.innerWidth && this.viewer) {
-            this.viewer.renderer.setSize(div.innerWidth, div.innerHeight);
+    updateSize(event) {
+        if (this._div && this.viewer) {
+            var p = this._div.parentElement;
+            this.viewer.renderer.setSize(p.clientWidth, p.clientHeight);
         }
     }
 
     render() {
         return (
-            <div className="ros-layer-3d" ref={this.updateSize}>
-                <div id={"ros3d-"+this.state.cid} />
-                {this.state.model ? '' : 'robot model loading...'}
+            <div className="ros-layer-3d">
+                <p style={{position:'absolute'}}>{this.state.model ? '' : 'robot model loading...'}</p>
+                <div id={"ros3d-"+this.state.cid} ref={div=>this._div=div} />
             </div>
         )
    }
