@@ -99,3 +99,10 @@
 .transition-fade-leave.transition-fade-leave-active {
     opacity: 0.01;
 }
+
+.ros-layer-3d {
+    pointer-events: initial;
+    width: 100%;
+    height: 100%;
+}
+

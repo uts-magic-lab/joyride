@@ -17,7 +17,7 @@ export default class App extends React.Component {
         return (
             <div className="joyride-app">
                 <main className="joyride-main">
-                    <ROSLayer topic="/joyride/background" transitionName="transition-fade"/>
+                    <ROSLayer topic="/joyride/background" transitionName="transition-fade" initialDisplay={{type:"ros3d"}}/>
                     <ROSLayer topic="/joyride/foreground" transitionName="transition-slide-up"/>
                 </main>
                 <header className="joyride-header">

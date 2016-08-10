@@ -8,6 +8,7 @@ import ROSPrompt from './prompt';
 import ROSVideoLayer from './video';
 import ROSButtons from './buttons';
 import ROSColorLayer from './color';
+import ROS3DLayer from './ros3d';
 
 // ensure that messages always have a "type" and "key" when they are rendered
 function parseMessage(text) {
@@ -133,6 +134,9 @@ export default class ROSLayer extends React.Component {
                 onSubmit={this.onSubmit}
                 autofocus
             />
+        }
+        else if (data.type == "ros3d") {
+            item = <ROS3DLayer />
         }
         else {
             // error and debug display

@@ -10,14 +10,15 @@
     "build": "NODE_ENV=production webpack --progress",
     "build-dev": "webpack --progress",
     "clean": "rm -rf public",
-    "test": "echo 'Error: no test specified' && exit 1"
+    "test": "echo 'Error: no test specified' && exit 1",
+    "postinstall": "D=node_modules/ros3d; if [ ! -d $D ]; then mkdir -p $D && cd $D && curl -sL 'https://github.com/RobotWebTools/ros3djs/archive/0.15.0.tar.gz' | tar xz --strip-components 1; fi"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/uts-magic-lab/joyride"
   },
   "dependencies": {
-    "eventemitter2": "~2.0.0",
+    "eventemitter2": "~0.4.14",
     "json-loader": "~0.5.4",
     "jsx-loader": "~0.13.2",
     "purecss": "^0.6.0",
@@ -25,6 +26,7 @@
     "react-addons-css-transition-group": "^15.2.1",
     "react-dom": "^15.2.1",
     "roslib": "~0.18.0",
+    "three": "^0.79.0",
     "tracekit": "^0.4.3",
     "webpack-fail-plugin": "^1.0.5"
   },
@@ -35,8 +37,10 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "imports-loader": "^0.6.5",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "react-hot-loader": "^1.3.0",
