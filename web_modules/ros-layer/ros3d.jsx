@@ -22,7 +22,7 @@ export default class ROS3DLayer extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this.updateSize);
+        window.addEventListener('resize', this.updateSize);
 
         let param = ros.Param({name: this.props.param || 'robot_description'});
         param.get((robot_description)=>{
@@ -57,6 +57,12 @@ export default class ROS3DLayer extends React.Component {
             loader:  ROS3D.COLLADA_LOADER
         });
 
+        window.last3d = this;
+    }
+
+    componentWillUnmount() {
+          window.removeEventListener('resize', this.updateSize);
+          this.tfClient.unsubscribe();
     }
 
     updateSize(event) {
