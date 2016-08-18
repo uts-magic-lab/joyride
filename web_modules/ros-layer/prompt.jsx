@@ -43,14 +43,14 @@ export default class ROSPrompt extends React.Component {
             }
         };
         return (
-            <form className="ros-prompt" onSubmit={this.sendMessage}>
+            <form className="ros-prompt pure-form" onSubmit={this.sendMessage}>
                 <label>
                     {this.props.text}
                     <input type="text"
                         name="answer"
                         ref={autofocus}/>
                 </label>
-                <button type="submit">Send</button>
+                <button type="submit" className="pure-button">Send</button>
             </form>
         );
     }

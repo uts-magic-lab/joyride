@@ -10,6 +10,7 @@ export default class App extends React.Component {
         this.state = {};
         this.toggleFooter = this.toggleFooter.bind(this);
     }
+
     toggleFooter() {
         this.setState({footerOpen: !this.state.footerOpen});
     }
@@ -24,7 +25,7 @@ export default class App extends React.Component {
                 <header className="joyride-header">
                     <ROSColorLayer topic="/joyride/emotion/color" color="#444" opacity={0.5}>
                         <div style={{position:"absolute",left:"1em"}}>
-                            <button>Navigate</button>
+                            <button className="pure-button">Navigate</button>
                         </div>
                         <div style={{position:"absolute",right:"1em"}}>
                             <EmotionPicker />
