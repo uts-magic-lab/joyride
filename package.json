@@ -27,8 +27,7 @@
     "react-dom": "^15.2.1",
     "roslib": "~0.18.0",
     "three": "~0.66.0",
-    "tracekit": "^0.4.3",
-    "webpack-fail-plugin": "^1.0.5"
+    "tracekit": "^0.4.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",
@@ -47,6 +46,13 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-fail-plugin": "^1.0.5"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
   }
 }
