@@ -3,6 +3,7 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var failPlugin = require('webpack-fail-plugin');
+var CopyPlugin = require('copy-webpack-plugin');
 
 // default values will be overridden by current environment
 var packageInfo = require('./package');
@@ -44,7 +45,10 @@ var config = {
     plugins: [
         new webpack.DefinePlugin({'process.env': env}),
         cssPlugin, 
-        failPlugin
+        failPlugin,
+        new CopyPlugin([{
+            from: 'static'
+        }])
     ],
     postcss: function(webpack) {
         return [
