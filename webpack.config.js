@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var postcssImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
 var failPlugin = require('webpack-fail-plugin');
 
@@ -49,7 +48,6 @@ var config = {
     ],
     postcss: function(webpack) {
         return [
-            postcssImport({addDependencyTo: webpack}),
             autoprefixer({browsers: '> 0.1%'})
         ]
     },
@@ -74,52 +72,27 @@ var config = {
             {
                 test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
                 loader: "url",
-                query: {
-                    limit: 10000,
-                    mimetype:"application/octet-stream",
-                    name:"[path][name].[ext]?[hash]",
-                    context: "web_modules"
-                }
+                query: {limit: 10000, mimetype:"application/octet-stream", name:"[path][name].[ext]?[hash]"}
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 loader: "url",
-                query: {
-                    limit: 10000,
-                    mimetype:"image/svg+xml",
-                    name:"[path][name].[ext]?[hash]",
-                    context: "web_modules"
-                }
+                query: {limit: 10000, mimetype:"image/svg+xml", name:"[path][name].[ext]?[hash]"}
             },
             {
                 test: /\.gif/,
                 loader: "url",
-                query: {
-                    limit: 10000,
-                    mimetype:"image/gif",
-                    name:"[path][name].[ext]?[hash]",
-                    context: "web_modules"
-                }
+                query: {limit: 10000, mimetype:"image/gif", name:"[path][name].[ext]?[hash]"}
             },
             {
                 test: /\.jpe?g/,
                 loader: "url",
-                query: {
-                    limit: 10000,
-                    mimetype:"image/jpg",
-                    name:"[path][name].[ext]?[hash]",
-                    context: "web_modules"
-                }
+                query: {limit: 10000, mimetype:"image/jpg", name:"[path][name].[ext]?[hash]"}
             },
             {
                 test: /\.png/,
                 loader: "url",
-                query: {
-                    limit: 10000,
-                    mimetype:"image/png",
-                    name:"[path][name].[ext]?[hash]",
-                    context: "web_modules"
-                }
+                query: {limit: 10000, mimetype:"image/png", name:"[path][name].[ext]?[hash]"}
             }
         ]
     },
